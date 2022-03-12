@@ -1,0 +1,29 @@
+{
+    "en": {
+        "results": "Results",
+        "episodes": "Episodes",
+        "addToList": "Add to your list",
+        "myAnimes": "My animes",
+        "animes": "Animes",
+        "image": "Image",
+        "name": "Name",
+        "type": "Type",
+        "genres": "Genres",
+        "status": "Status",
+        "inTotalThereAre": "In total there are",
+        "alreadyAdded": "Already added",
+        "search": "Search...",
+        "removeFromList": "Remove from your list",
+        "removed": "Removed",
+        "animeRemoved": "The anime was removed successfully",
+        "added": "Added",
+        "animeAdded": "The anime was added successfully",
+        "episode": "Episode",
+        "episodeName": "Episode name",
+        "isFiller": "Filler",
+        "yes": "Yes",
+        "no": "No",
+        "edit": "Edit",
+        "save": "Save"
+    }
+}

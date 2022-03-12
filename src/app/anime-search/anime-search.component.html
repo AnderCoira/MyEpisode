@@ -1,0 +1,41 @@
+<p-toast></p-toast>
+
+<p-table *ngIf="animeSearch" [value]="animeSearch.data" responsiveLayout="scroll">
+  <ng-template pTemplate="caption">
+      <div class="flex align-items-center justify-content-between">
+        {{ 'en.animes' | translate }}
+        <input (search)="submitAnimeName()" class="form-control form-control-lg dialogAnimeSearch" type="search" placeholder="{{ 'en.search' | translate }}" [(ngModel)]="animeName">
+      </div>
+  </ng-template>
+  <ng-template pTemplate="header">
+      <tr>
+          <th>{{ 'en.image' | translate }}</th>
+          <th>{{ 'en.name' | translate }}</th>
+          <th>{{ 'en.type' | translate }}</th>
+          <th>{{ 'en.genres' | translate }}</th>
+          <th>{{ 'en.status' | translate }}</th>
+          <th></th>
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-anime>
+      <tr>
+          <td><img [src]="anime.images.jpg.image_url" [alt]="anime.title" width="100" class="shadow-4" /></td>
+          <td>{{anime.title}}</td>
+          <td>{{anime.type}}</td>
+          <td><p-tag class="genres" *ngFor="let genre of anime.genres" styleClass="mr-2" severity="info" value="{{ genre.name }}" [rounded]="true"></p-tag></td>
+          <td>
+            <p-tag *ngIf="anime.airing" styleClass="mr-2" severity="success" value="{{ anime.status }}" [rounded]="true"></p-tag>
+            <p-tag *ngIf="!anime.airing" styleClass="mr-2" severity="danger" value="{{ anime.status }}" [rounded]="true"></p-tag>
+          </td>
+          <td>
+            <button *ngIf="!anime.added" (click)="addToMyList(anime.mal_id)" pButton pRipple type="button" icon="pi pi-plus" class="p-button-rounded" pTooltip="{{ 'en.addToList' | translate }}"></button>
+            <button *ngIf="anime.added" pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded p-button-success" disabled></button>
+          </td>
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="summary">
+      <div class="flex align-items-center justify-content-between">
+        {{ 'en.inTotalThereAre' | translate }} {{animeSearch.data ? animeSearch.data.length : 0 }}.
+      </div>
+  </ng-template>
+</p-table>

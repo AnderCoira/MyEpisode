@@ -1,0 +1,27 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+
+* {
+   margin: 0;
+   padding: 0; 
+}
+
+body {
+    background-color: #121212;
+    color: #ffffff !important;
+}
+
+.bg {
+    background-image: url("assets/images/sharingan_bg.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 937px;
+}
+
+.form-control:focus {
+    border-color: #BA68C8;
+    box-shadow: 0 0 0 0.2rem rgba(167, 40, 167, 0.25);
+} 

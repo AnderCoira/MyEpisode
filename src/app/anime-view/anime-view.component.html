@@ -1,0 +1,85 @@
+<p-toast></p-toast>
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+
+<div class="container">
+  <input (search)="submitAnimeName()" class="form-control form-control-lg dialogAnimeSearch" type="search" placeholder="{{ 'en.search' | translate }}" [(ngModel)]="animeName">
+
+  <p-table *ngIf="myAnimes.length > 0" [value]="myAnimes" dataKey="mal_id" responsiveLayout="scroll">
+    <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 3rem"></th>
+          <th>{{ 'en.image' | translate }}</th>
+          <th>{{ 'en.name' | translate }}</th>
+          <th>{{ 'en.type' | translate }}</th>
+          <th>{{ 'en.genres' | translate }}</th>
+          <th>{{ 'en.status' | translate }}</th>
+          <th></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-anime let-expanded="expanded">
+        <tr>
+            <td>
+                <button type="button" pButton pRipple [pRowToggler]="anime" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+            </td>
+            <td><img [src]="anime.images.jpg.image_url" [alt]="anime.title" width="100" class="shadow-4" /></td>
+            <td>{{anime.title}}</td>
+            <td>{{anime.type}}</td>
+            <td><p-tag class="genres" *ngFor="let genre of anime.genres" styleClass="mr-2" severity="info" value="{{ genre.name }}" [rounded]="true"></p-tag></td>
+            <td>
+              <p-tag *ngIf="anime.airing" styleClass="mr-2" severity="success" value="{{ anime.status }}" [rounded]="true"></p-tag>
+              <p-tag *ngIf="!anime.airing" styleClass="mr-2" severity="danger" value="{{ anime.status }}" [rounded]="true"></p-tag>
+            </td>
+            <td>
+              <button *ngIf="!anime.added" (click)="removeFromMyList(anime.mal_id)" pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger" pTooltip="{{ 'en.removeFromList' | translate }}"></button>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="rowexpansion" let-anime>
+        <tr>
+            <td colspan="7">
+                <div class="p-3">
+                    <p-table [value]="anime.myConfig" dataKey="mal_id">
+                        <ng-template pTemplate="header">
+                            <tr>
+                              <th>{{ 'en.episode' | translate }}</th>
+                              <th>{{ 'en.episodeName' | translate }}</th>
+                              <th>{{ 'en.isFiller' | translate }}</th>
+                              <th style="width: 4rem"></th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-anime>
+                            <tr>
+                                <td>
+                                  <span *ngIf="!editMode">{{ anime.data.mal_id }}</span>
+                                  <p-inputNumber *ngIf="editMode" [(ngModel)]="anime.data.mal_id" [showButtons]="true" buttonLayout="vertical" spinnerMode="vertical" inputId="vertical" decrementButtonClass="p-button-secondary" incrementButtonClass="p-button-secondary" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus"></p-inputNumber>
+                                </td>
+                                <td>{{anime.data.title}}</td>
+                                <td *ngIf="anime.data.filler">{{ 'en.yes' | translate }}</td>
+                                <td *ngIf="!anime.data.filler">{{ 'en.no' | translate }}</td>
+                                <td>
+                                  <button (click)="editEpisode()" *ngIf="!editMode" pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded" pTooltip="{{ 'en.edit' | translate }}"></button>
+                                  <button (click)="saveEpisode(anime.data)" *ngIf="editMode" pButton pRipple type="button" icon="pi pi-save" class="p-button-rounded" pTooltip="{{ 'en.save' | translate }}"></button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                            <tr>
+                                <td colspan="6"></td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </td>
+        </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+
+  <p-dialog header="{{ 'en.results' | translate }}" [(visible)]="displayModal" [modal]="true" [style]="{width: '90vw'}"
+  [draggable]="false" [resizable]="false" (click)="hideModal($event)" [closeOnEscape]="false">
+      <app-anime-search [animeSearch]="animeSearch"></app-anime-search>
+      <ng-template pTemplate="footer">
+      <!-- <p-button icon="pi pi-check" (click)="displayModal=false" label="Ok" styleClass="p-button-text"></p-button> -->
+      </ng-template>
+</p-dialog>
