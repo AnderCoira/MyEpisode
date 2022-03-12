@@ -15,6 +15,7 @@ export class AnimeViewComponent implements OnInit {
   myAnimes: any = [];
   animeSearch: AnimeSearch;
   animeName: String;
+  notSavedEpisode: String;
 
   constructor(private service: MainService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
 
@@ -69,7 +70,8 @@ export class AnimeViewComponent implements OnInit {
     }
   }
 
-  editEpisode(){
+  editEpisode(animeData){
+    this.notSavedEpisode = animeData.mal_id;
     this.editMode = true;
   }
 
@@ -86,6 +88,11 @@ export class AnimeViewComponent implements OnInit {
         console.log(err);
       }
     });
+  }
+
+  cancelEdition(animeData){
+    animeData.mal_id = this.notSavedEpisode;
+    this.editMode = false;
   }
 
 

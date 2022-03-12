@@ -24,6 +24,7 @@
         "yes": "Yes",
         "no": "No",
         "edit": "Edit",
-        "save": "Save"
+        "save": "Save",
+        "cancel": "Cancel"
     }
 }

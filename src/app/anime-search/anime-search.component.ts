@@ -25,20 +25,27 @@ export class AnimeSearchComponent implements OnInit {
   }
 
   addToMyList(clickedId){
-    this.service.getAnimeEpisodeById(clickedId, 1).subscribe({
-      next: res => {
-        let found = this.animeSearch.data.find(id => id.mal_id === clickedId);
-        found.myConfig = [res];
-        found.myConfig[0].data.anime_mal_id = clickedId;
-        found = JSON.stringify(found);
-        localStorage.setItem(clickedId, found);
-        this.checkAddedAnimes();
-        this.addSingleToast('success', 'Added', 'The anime was added successfully');
-      },
-      error: err => {
-        console.log(err);
-      }
-    });
+    let found = this.animeSearch.data.find(id => id.mal_id === clickedId);
+    if(found.type === 'TV'){
+      this.service.getAnimeEpisodeById(clickedId, 1).subscribe({
+        next: res => {
+          found.myConfig = [res];
+          found.myConfig[0].data.anime_mal_id = clickedId;
+          found = JSON.stringify(found);
+          localStorage.setItem(clickedId, found);
+          this.checkAddedAnimes();
+          this.addSingleToast('success', 'Added', 'The anime was added successfully');
+        },
+        error: err => {
+          console.log(err);
+        }
+      });
+    }else{
+      found = JSON.stringify(found);
+      localStorage.setItem(clickedId, found);
+      this.checkAddedAnimes();
+      this.addSingleToast('success', 'Added', 'The anime was added successfully');
+    }
   }
 
   checkAddedAnimes(){
