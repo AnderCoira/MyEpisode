@@ -28,10 +28,10 @@ export class AnimeViewComponent implements OnInit {
 
   submitAnimeName(){
     if(this.animeName){
+      this.displayModal = true;
       this.service.searchAnime(this.animeName).subscribe({
         next: res => {
           this.animeSearch = res;
-          this.displayModal = true;
           this.animeName = '';
         },
         error: err => {

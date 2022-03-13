@@ -4,7 +4,7 @@
 <div class="container">
   <input (search)="submitAnimeName()" class="form-control form-control-lg dialogAnimeSearch" type="search" placeholder="{{ 'en.search' | translate }}" [(ngModel)]="animeName">
 
-  <p-table *ngIf="myAnimes.length > 0" [value]="myAnimes" dataKey="mal_id" responsiveLayout="scroll" scrollHeight="800px" [virtualScroll]="true">
+  <p-table *ngIf="myAnimes.length > 0; else noAnimes" [value]="myAnimes" dataKey="mal_id" responsiveLayout="scroll" scrollHeight="800px" [virtualScroll]="true">
     <ng-template pTemplate="header">
         <tr>
           <th style="width: 3rem"></th>
@@ -76,6 +76,10 @@
         </tr>
     </ng-template>
   </p-table>
+  <ng-template class="noAnimesContainer" #noAnimes>
+    <img class="noAnimesImage" src="../../assets/images/no_data_found.png" alt="">
+  </ng-template>
+  
 </div>
 
 
@@ -83,6 +87,6 @@
   [draggable]="false" [resizable]="false" (click)="hideModal($event)" [closeOnEscape]="false">
       <app-anime-search [animeSearch]="animeSearch"></app-anime-search>
       <ng-template pTemplate="footer">
-      <!-- <p-button icon="pi pi-check" (click)="displayModal=false" label="Ok" styleClass="p-button-text"></p-button> -->
       </ng-template>
 </p-dialog>
+  

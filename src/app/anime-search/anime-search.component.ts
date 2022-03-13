@@ -13,14 +13,16 @@ export class AnimeSearchComponent implements OnInit {
 
   @Input() animeSearch: any;
   animeName: String;
+  loader: Boolean = false;
 
   constructor(private service: MainService, private messageService: MessageService) { }
 
   ngOnInit(): void {
-  
+
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    this.loader = true;
     this.checkAddedAnimes();
   }
 
@@ -50,6 +52,7 @@ export class AnimeSearchComponent implements OnInit {
 
   checkAddedAnimes(){
     if(this.animeSearch){
+      this.loader = false
       this.animeSearch.data.forEach(element => {
         if(localStorage.getItem(element.mal_id.toString())){
           element.added = true;
@@ -62,11 +65,13 @@ export class AnimeSearchComponent implements OnInit {
 
   submitAnimeName(){
     if(this.animeName){
+      this.loader = true;
       this.service.searchAnime(this.animeName).subscribe({
         next: res => {
           this.animeSearch = res;
           this.checkAddedAnimes();
           this.animeName = '';
+          this.loader = false;
         },
         error: err => {
           console.log(err);
