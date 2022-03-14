@@ -33,13 +33,15 @@ import {ToastModule} from 'primeng/toast';
 import {TooltipModule} from 'primeng/tooltip';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {InputNumberModule} from 'primeng/inputnumber';
+import { AnimeLoaderComponent } from './anime-loader/anime-loader.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CommonComponent,
     AnimeViewComponent,
-    AnimeSearchComponent
+    AnimeSearchComponent,
+    AnimeLoaderComponent
   ],
   imports: [
     BrowserModule,

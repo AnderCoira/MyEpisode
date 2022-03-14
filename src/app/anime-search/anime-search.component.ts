@@ -14,6 +14,7 @@ export class AnimeSearchComponent implements OnInit {
   @Input() animeSearch: any;
   animeName: String;
   loader: Boolean = false;
+  blockUI = false;
 
   constructor(private service: MainService, private messageService: MessageService) { }
 
@@ -22,11 +23,13 @@ export class AnimeSearchComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    this.loader = true;
+    this.startLoader();
     this.checkAddedAnimes();
   }
 
   addToMyList(clickedId){
+    this.startLoader();
+    this.lockUI();
     let found = this.animeSearch.data.find(id => id.mal_id === clickedId);
     if(found.type === 'TV'){
       this.service.getAnimeEpisodeById(clickedId, 1).subscribe({
@@ -37,9 +40,13 @@ export class AnimeSearchComponent implements OnInit {
           localStorage.setItem(clickedId, found);
           this.checkAddedAnimes();
           this.addSingleToast('success', 'Added', 'The anime was added successfully');
+          this.stopLoader();
+          this.unlockUI();
         },
         error: err => {
           console.log(err);
+          this.stopLoader();
+          this.unlockUI();
         }
       });
     }else{
@@ -52,7 +59,8 @@ export class AnimeSearchComponent implements OnInit {
 
   checkAddedAnimes(){
     if(this.animeSearch){
-      this.loader = false
+      this.stopLoader();
+      this.unlockUI();
       this.animeSearch.data.forEach(element => {
         if(localStorage.getItem(element.mal_id.toString())){
           element.added = true;
@@ -65,13 +73,13 @@ export class AnimeSearchComponent implements OnInit {
 
   submitAnimeName(){
     if(this.animeName){
-      this.loader = true;
+      this.startLoader();
       this.service.searchAnime(this.animeName).subscribe({
         next: res => {
           this.animeSearch = res;
           this.checkAddedAnimes();
           this.animeName = '';
-          this.loader = false;
+          this.stopLoader();
         },
         error: err => {
           console.log(err);
@@ -82,5 +90,22 @@ export class AnimeSearchComponent implements OnInit {
 
   addSingleToast(severity, summary, detail) {
     this.messageService.add({severity: severity, summary: summary, detail: detail});
-}
+  }
+
+  lockUI() {
+    this.blockUI = true;
+  }
+
+  unlockUI() {
+    this.blockUI = false;
+  }
+
+  startLoader() {
+    this.loader = true;
+  }
+
+  stopLoader() {
+    this.loader = false;
+  }
+
 }
