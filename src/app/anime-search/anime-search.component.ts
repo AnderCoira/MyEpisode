@@ -45,6 +45,7 @@ export class AnimeSearchComponent implements OnInit {
         },
         error: err => {
           console.log(err);
+          this.addSingleToast('error', 'Unexpected error', 'Please try again...');
           this.stopLoader();
           this.unlockUI();
         }
@@ -74,15 +75,20 @@ export class AnimeSearchComponent implements OnInit {
   submitAnimeName(){
     if(this.animeName){
       this.startLoader();
+      this.lockUI();
       this.service.searchAnime(this.animeName).subscribe({
         next: res => {
           this.animeSearch = res;
           this.checkAddedAnimes();
           this.animeName = '';
           this.stopLoader();
+          this.unlockUI();
         },
         error: err => {
           console.log(err);
+          this.addSingleToast('error', 'Unexpected error', 'Please try again...');
+          this.stopLoader();
+          this.unlockUI();
         }
      });
     }

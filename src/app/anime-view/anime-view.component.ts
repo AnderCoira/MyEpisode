@@ -16,6 +16,8 @@ export class AnimeViewComponent implements OnInit {
   animeSearch: AnimeSearch;
   animeName: String;
   notSavedEpisode: String;
+  loader: boolean = false;
+  blockUI: boolean = false;
 
   constructor(private service: MainService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
 
@@ -28,14 +30,19 @@ export class AnimeViewComponent implements OnInit {
 
   submitAnimeName(){
     if(this.animeName){
+      this.lockUI();
       this.displayModal = true;
       this.service.searchAnime(this.animeName).subscribe({
         next: res => {
           this.animeSearch = res;
           this.animeName = '';
+          this.unlockUI();
         },
         error: err => {
           console.log(err);
+          this.addSingleToast('error', 'Unexpected error', 'Please try again...');
+          this.stopLoader();
+          this.unlockUI();
         }
      });
     }
@@ -76,6 +83,8 @@ export class AnimeViewComponent implements OnInit {
   }
 
   saveEpisode(animeData){
+    this.startLoader();
+    this.lockUI();
     this.editMode = false;
     this.service.getAnimeEpisodeById(animeData.anime_mal_id, animeData.mal_id).subscribe({
       next: res => {
@@ -83,9 +92,14 @@ export class AnimeViewComponent implements OnInit {
         found.myConfig[0].data.mal_id = res.data.mal_id;
         found.myConfig[0].data.title = res.data.title;
         localStorage.setItem(animeData.anime_mal_id, JSON.stringify(found));
+        this.stopLoader();
+        this.unlockUI();
       },
       error: err => {
         console.log(err);
+        this.addSingleToast('error', 'Unexpected error', 'Please try again...');
+        this.stopLoader();
+        this.unlockUI();
       }
     });
   }
@@ -98,6 +112,22 @@ export class AnimeViewComponent implements OnInit {
 
   addSingleToast(severity, summary, detail) {
     this.messageService.add({severity: severity, summary: summary, detail: detail});
+  }
+
+  lockUI() {
+    this.blockUI = true;
+  }
+
+  unlockUI() {
+    this.blockUI = false;
+  }
+
+  startLoader() {
+    this.loader = true;
+  }
+
+  stopLoader() {
+    this.loader = false;
   }
 
 }

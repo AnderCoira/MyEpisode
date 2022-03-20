@@ -1,5 +1,6 @@
 <p-toast></p-toast>
 <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-blockUI [blocked]="blockUI"></p-blockUI>
 
 <div class="container">
   <input (search)="submitAnimeName()" class="form-control form-control-lg dialogAnimeSearch" type="search" placeholder="{{ 'en.search' | translate }}" [(ngModel)]="animeName">
@@ -90,3 +91,5 @@
       </ng-template>
 </p-dialog>
   
+
+<app-anime-loader *ngIf="loader"></app-anime-loader>
