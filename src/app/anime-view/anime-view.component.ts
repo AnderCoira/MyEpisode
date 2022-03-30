@@ -89,6 +89,7 @@ export class AnimeViewComponent implements OnInit {
         const found = this.myAnimes.find(id => id.mal_id === animeData.anime_mal_id);
         found.myConfig[0].data.mal_id = res.data.mal_id;
         found.myConfig[0].data.title = res.data.title;
+        found.myConfig[0].data.filler = res.data.filler;
         localStorage.setItem(animeData.anime_mal_id, JSON.stringify(found));
         this.stopLoader();
         this.unlockUI();
