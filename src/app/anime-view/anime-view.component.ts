@@ -16,13 +16,13 @@ export class AnimeViewComponent implements OnInit {
   animeSearch: AnimeSearch;
   animeName: String;
   notSavedEpisode: String;
+  editAnimeEpisode: String;
   loader: boolean = false;
   blockUI: boolean = false;
 
   constructor(private service: MainService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
 
   displayModal: any = false;
-  editMode: boolean = false;
 
   ngOnInit(): void {
     this.getMyAnimeList();
@@ -54,7 +54,8 @@ export class AnimeViewComponent implements OnInit {
         let item = localStorage.getItem(data);
         this.myAnimes.push(JSON.parse(item));
     });
-
+    console.log(this.myAnimes);
+    
   }
 
   removeFromMyList(clickedId){
@@ -77,13 +78,13 @@ export class AnimeViewComponent implements OnInit {
 
   editEpisode(animeData){
     this.notSavedEpisode = animeData.mal_id;
-    this.editMode = true;
+    this.editAnimeEpisode = animeData.anime_mal_id;
   }
 
   saveEpisode(animeData){
     this.startLoader();
     this.lockUI();
-    this.editMode = false;
+    this.editAnimeEpisode = undefined;
     this.service.getAnimeEpisodeById(animeData.anime_mal_id, animeData.mal_id).subscribe({
       next: res => {
         const found = this.myAnimes.find(id => id.mal_id === animeData.anime_mal_id);
@@ -105,7 +106,7 @@ export class AnimeViewComponent implements OnInit {
 
   cancelEdition(animeData){
     animeData.mal_id = this.notSavedEpisode;
-    this.editMode = false;
+    this.editAnimeEpisode = undefined;
   }
 
 

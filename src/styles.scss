@@ -13,15 +13,29 @@ body {
     color: #ffffff !important;
 }
 
-// .bg {
-//     // background-image: url("assets/images/sharingan_bg.png");
-//     background-repeat: no-repeat;
-//     background-position: center;
-//     background-size: cover;
-//     height: 937px;
-// }
-
 .form-control:focus {
     border-color: #BA68C8;
     box-shadow: 0 0 0 0.2rem rgba(167, 40, 167, 0.25);
 } 
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    // background: #BA68C8;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+    // background: #BA68C8;
+  }
