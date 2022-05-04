@@ -54,8 +54,6 @@ export class AnimeViewComponent implements OnInit {
         let item = localStorage.getItem(data);
         this.myAnimes.push(JSON.parse(item));
     });
-    console.log(this.myAnimes);
-    
   }
 
   removeFromMyList(clickedId){
