@@ -7,10 +7,43 @@ img {
 }
 
 .genres {
-    padding: 5px;
+    display: flex;
+    float: left;
+    padding: 0px 5px 5px 0px;
 }
 
 .dialogAnimeSearch {
     margin-top: 10px;
     border-color: #383838;
+}
+
+//Custom responsive
+//Change tags alignment not to overlap them
+@media only screen and (max-width: 1199px) {
+    :host ::ng-deep p-tag {
+        text-align: center;
+    }
+}
+
+//Change edit mode
+@media only screen and (max-width: 960px) {
+    :host ::ng-deep .edit-sm {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+//Hide columns in small devices
+@media only screen and (max-width: 767px) {
+    :host ::ng-deep .sm-screen {
+        display: none;
+    }
+}
+
+//Change toast size
+@media only screen and (max-width: 435px) {
+    :host ::ng-deep .p-toast {
+        width: 17rem;
+    }
 }

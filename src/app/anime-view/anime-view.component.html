@@ -11,9 +11,9 @@
           <th style="width: 3rem"></th>
           <th>{{ 'en.image' | translate }}</th>
           <th>{{ 'en.name' | translate }}</th>
-          <th>{{ 'en.type' | translate }}</th>
-          <th>{{ 'en.genres' | translate }}</th>
-          <th>{{ 'en.status' | translate }}</th>
+          <th class="sm-screen">{{ 'en.type' | translate }}</th>
+          <th class="sm-screen">{{ 'en.genres' | translate }}</th>
+          <th class="sm-screen">{{ 'en.status' | translate }}</th>
           <th></th>
         </tr>
     </ng-template>
@@ -24,9 +24,13 @@
             </td>
             <td><img [src]="anime.images.jpg.image_url" [alt]="anime.title" width="100" class="shadow-4" /></td>
             <td>{{anime.title}}</td>
-            <td>{{anime.type}}</td>
-            <td><p-tag class="genres" *ngFor="let genre of anime.genres" styleClass="mr-2" severity="info" value="{{ genre.name }}" [rounded]="true"></p-tag></td>
-            <td>
+            <td class="sm-screen">{{anime.type}}</td>
+            <td class="sm-screen">
+              <div *ngFor="let genre of anime.genres" class="genres">
+                <p-tag styleClass="mr-2" severity="info" value="{{ genre.name }}" [rounded]="true"></p-tag>
+              </div>
+            </td>
+            <td class="sm-screen">
               <p-tag *ngIf="anime.airing" styleClass="mr-2" severity="success" value="{{ anime.status }}" [rounded]="true"></p-tag>
               <p-tag *ngIf="!anime.airing" styleClass="mr-2" severity="danger" value="{{ anime.status }}" [rounded]="true"></p-tag>
             </td>
