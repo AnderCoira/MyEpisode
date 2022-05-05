@@ -1,4 +1,4 @@
-img {
+.xs-img {
     max-height: 360px;
 }
 
@@ -53,9 +53,21 @@ img {
     }
 }
 
-//Hide columns in small devices
+//Hide columns in small devices and change img sizes (max)
 @media only screen and (max-width: 767px) {
     :host ::ng-deep .sm-screen {
+        display: none;
+    }
+
+    .xs-img {
+        display: none;
+    }
+}
+
+//Hide columns in small devices and change img sizes (min)
+@media only screen and (min-width: 767px) {
+
+    .s-img {
         display: none;
     }
 }
