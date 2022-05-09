@@ -14,7 +14,7 @@
           <th class="sm-screen">{{ 'en.type' | translate }}</th>
           <th class="sm-screen">{{ 'en.genres' | translate }}</th>
           <th class="sm-screen">{{ 'en.status' | translate }}</th>
-          <th><button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2"  pTooltip="Export" tooltipPosition="bottom"></button></th>
+          <th><button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2"  pTooltip="{{ 'en.export' | translate }}" tooltipPosition="bottom"></button></th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-anime let-expanded="expanded">
@@ -58,17 +58,33 @@
                         <ng-template pTemplate="body" let-anime>
                             <tr>
                                 <td>
-                                  <span *ngIf="editAnimeEpisode !== anime.data.anime_mal_id">{{ anime.data.mal_id }}</span>
-                                  <p-inputNumber *ngIf="editAnimeEpisode === anime.data.anime_mal_id" [(ngModel)]="anime.data.mal_id" [showButtons]="true" buttonLayout="vertical" spinnerMode="vertical" inputId="vertical" decrementButtonClass="p-button-secondary" incrementButtonClass="p-button-secondary" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus"></p-inputNumber>
+                                  <div class="editDivSm">
+                                    <span *ngIf="editAnimeEpisode !== anime.data.anime_mal_id">{{ anime.data.mal_id }}</span>
+                                    <p-inputNumber *ngIf="editAnimeEpisode === anime.data.anime_mal_id" [(ngModel)]="anime.data.mal_id" [showButtons]="true" buttonLayout="vertical" spinnerMode="vertical" inputId="vertical" decrementButtonClass="p-button-secondary" incrementButtonClass="p-button-secondary" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus"></p-inputNumber>
+                                  </div>
                                 </td>
-                                <td>{{anime.data.title}}</td>
-                                <td *ngIf="anime.data.filler">{{ 'en.yes' | translate }}</td>
-                                <td *ngIf="!anime.data.filler">{{ 'en.no' | translate }}</td>
                                 <td>
-                                  <button *ngIf="editAnimeEpisode !== anime.data.anime_mal_id" (click)="editEpisode(anime.data)" pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded" pTooltip="{{ 'en.edit' | translate }}"></button>
-                                  <div *ngIf="editAnimeEpisode === anime.data.anime_mal_id" class="btn-group" role="group" aria-label="Basic example">
-                                    <button (click)="saveEpisode(anime.data)" pButton pRipple type="button" icon="pi pi-save" class="p-button-rounded" pTooltip="{{ 'en.save' | translate }}"></button>
-                                    <button (click)="cancelEdition(anime.data)" pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded" pTooltip="{{ 'en.cancel' | translate }}"></button>
+                                  <div class="editDivSm">
+                                    {{anime.data.title}}
+                                  </div>
+                                </td>
+                                <td *ngIf="anime.data.filler">
+                                  <div class="editDivSm">
+                                    {{ 'en.yes' | translate }}
+                                  </div>
+                                </td>
+                                <td *ngIf="!anime.data.filler">
+                                  <div class="editDivSm">
+                                    {{ 'en.no' | translate }}
+                                  </div>
+                                </td>
+                                <td>
+                                  <div class="editDivSm">
+                                    <button *ngIf="editAnimeEpisode !== anime.data.anime_mal_id" (click)="editEpisode(anime.data)" pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded" pTooltip="{{ 'en.edit' | translate }}"></button>
+                                    <div *ngIf="editAnimeEpisode === anime.data.anime_mal_id" class="btn-group" role="group" aria-label="Basic example">
+                                      <button (click)="saveEpisode(anime.data)" pButton pRipple type="button" icon="pi pi-save" class="p-button-rounded" pTooltip="{{ 'en.save' | translate }}"></button>
+                                      <button (click)="cancelEdition(anime.data)" pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded" pTooltip="{{ 'en.cancel' | translate }}"></button>
+                                    </div>
                                   </div>
                                 </td>
                             </tr>

@@ -25,6 +25,7 @@
         "no": "No",
         "edit": "Edit",
         "save": "Save",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "export": "Export"
     }
 }
