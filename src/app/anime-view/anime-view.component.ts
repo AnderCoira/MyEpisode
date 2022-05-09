@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AnimeSearch } from 'src/interfaces/anime-search';
 import { MainService } from '../services/main.service';
+import * as FileSaver from 'file-saver';
+import * as XLSX from 'xlsx';
 
 
 @Component({
@@ -110,6 +112,96 @@ export class AnimeViewComponent implements OnInit {
 
   addSingleToast(severity, summary, detail) {
     this.messageService.add({severity: severity, summary: summary, detail: detail});
+  }
+
+  exportExcel() {
+    import("xlsx").then(xlsx => {
+
+      let myConfigArr = [];
+      let myImagesArr = [];
+      let myTrailerArr = [];
+      let myAiredArr = [];
+      let myBroadcastArr = [];
+      let myProducersArr = [];
+      let myLicensorsArr = [];
+      let myStudiosArr = [];
+      let myGenresArr = [];
+      let myExplicitGenresArr = [];
+      let myThemesArr = [];
+      let myDemographicsArr = [];
+
+      this.myAnimes.forEach(anime => {
+        myConfigArr.push(anime.myConfig[0].data);
+        myImagesArr.push(anime.images.jpg);
+        myTrailerArr.push(anime.trailer);
+        myAiredArr.push(anime.aired);
+        myBroadcastArr.push(anime.broadcast);
+        anime.producers.forEach(producer => {
+          myProducersArr.push(producer);
+        });
+        anime.licensors.forEach(licensor => {
+          myLicensorsArr.push(licensor);
+        });
+        anime.studios.forEach(studio => {
+          myStudiosArr.push(studio);
+        });
+        anime.genres.forEach(genre => {
+          myGenresArr.push(genre);
+        });
+        anime.explicit_genres.forEach(explicit_genre => {
+          myGenresArr.push(explicit_genre);
+        });
+        anime.themes.forEach(theme => {
+          myThemesArr.push(theme);
+        });
+        anime.demographics.forEach(demographic => {
+          myDemographicsArr.push(demographic);
+        });
+      });
+
+      const worksheet = xlsx.utils.json_to_sheet(this.myAnimes);
+      const myConfig = xlsx.utils.json_to_sheet(myConfigArr);
+      const images = xlsx.utils.json_to_sheet(myImagesArr);
+      const trailer = xlsx.utils.json_to_sheet(myTrailerArr);
+      const aired = xlsx.utils.json_to_sheet(myAiredArr);
+      const broadcast = xlsx.utils.json_to_sheet(myBroadcastArr);
+      const producers = xlsx.utils.json_to_sheet(myProducersArr);
+      const licensors = xlsx.utils.json_to_sheet(myLicensorsArr);
+      const studios = xlsx.utils.json_to_sheet(myStudiosArr);
+      const genres = xlsx.utils.json_to_sheet(myGenresArr);
+      const explicitGenres = xlsx.utils.json_to_sheet(myExplicitGenresArr);
+      const themes = xlsx.utils.json_to_sheet(myThemesArr);
+      const demographics = xlsx.utils.json_to_sheet(myDemographicsArr);
+      const workbook = { 
+        Sheets: { 
+          'general': worksheet,
+          'myconfig': myConfig,
+          'images': images,
+          'trailer': trailer,
+          'aired': aired,
+          'broadcast': broadcast,
+          'producers': producers,
+          'licensors': licensors,
+          'studios': studios,
+          'genres': genres,
+          'explicitgenres': explicitGenres,
+          'themes': themes,
+          'demographics': demographics,
+        }, 
+        SheetNames: ['general', 'myconfig', 'images', 'trailer', 'aired', 'broadcast', 'producers', 'licensors', 'studios', 'genres', 'explicitgenres', 'themes', 'demographics']
+      };
+      const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
+      this.saveAsExcelFile(excelBuffer, "MyAnimes");
+    });
+  }
+
+  saveAsExcelFile(buffer: any, fileName: string): void {
+    let EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+    let EXCEL_EXTENSION = '.xlsx';
+    const data: Blob = new Blob([buffer], {
+        type: EXCEL_TYPE
+    });
+    FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
   }
 
   lockUI() {

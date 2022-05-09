@@ -14,7 +14,7 @@
           <th class="sm-screen">{{ 'en.type' | translate }}</th>
           <th class="sm-screen">{{ 'en.genres' | translate }}</th>
           <th class="sm-screen">{{ 'en.status' | translate }}</th>
-          <th></th>
+          <th><button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2"  pTooltip="Export" tooltipPosition="bottom"></button></th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-anime let-expanded="expanded">

@@ -17,14 +17,11 @@ img {
     border-color: #383838;
 }
 
-//Custom responsive
-//Change tags alignment not to overlap them
-@media only screen and (max-width: 1199px) {
-    :host ::ng-deep p-tag {
-        text-align: center;
-    }
+p-tag {
+    text-align: center;
 }
 
+//Custom responsive
 //Change edit mode
 @media only screen and (max-width: 960px) {
     :host ::ng-deep .edit-sm {
