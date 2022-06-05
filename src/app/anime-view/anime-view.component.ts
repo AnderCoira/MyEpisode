@@ -56,6 +56,7 @@ export class AnimeViewComponent implements OnInit {
         let item = localStorage.getItem(data);
         this.myAnimes.push(JSON.parse(item));
     });
+    this.myAnimes.sort(this.compare);
   }
 
   removeFromMyList(clickedId){
@@ -218,6 +219,16 @@ export class AnimeViewComponent implements OnInit {
 
   stopLoader() {
     this.loader = false;
+  }
+
+  compare (a, b) {
+    if ( a.title < b.title ){
+      return -1;
+    }
+    if ( a.title > b.title ){
+      return 1;
+    }
+    return 0;
   }
 
 }

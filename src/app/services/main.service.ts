@@ -10,14 +10,16 @@ import { AnimeEpisode } from 'src/interfaces/anime-episode';
 })
 export class MainService {
 
+  URL: string = "https://api.jikan.moe/v4";
+
   constructor(private http: HttpClient) { }
 
   searchAnime(animeName: String){
-    return this.http.get<AnimeSearch>(`https://api.jikan.moe/v4/anime?q=${animeName}`);
+    return this.http.get<AnimeSearch>(`${this.URL}/anime?q=${animeName}`);
   }
 
   getAnimeEpisodeById(animeId: Number, episodeNumber: Number){
-    return this.http.get<AnimeEpisode>(`https://api.jikan.moe/v4/anime/${animeId}/episodes/${episodeNumber}`);
+    return this.http.get<AnimeEpisode>(`${this.URL}/anime/${animeId}/episodes/${episodeNumber}`);
   }
 
 }
