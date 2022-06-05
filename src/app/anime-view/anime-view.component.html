@@ -12,6 +12,7 @@
           <th>{{ 'en.image' | translate }}</th>
           <th>{{ 'en.name' | translate }}</th>
           <th class="sm-screen">{{ 'en.type' | translate }}</th>
+          <th class="sm-screen">{{ 'en.broadcast' | translate }}</th>
           <th class="sm-screen">{{ 'en.genres' | translate }}</th>
           <th class="sm-screen">{{ 'en.status' | translate }}</th>
           <th><button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2"  pTooltip="{{ 'en.export' | translate }}" tooltipPosition="bottom"></button></th>
@@ -28,6 +29,7 @@
             </td>
             <td>{{anime.title}}</td>
             <td class="sm-screen">{{anime.type}}</td>
+            <td class="sm-screen">{{anime.broadcast.string}}</td>
             <td class="sm-screen">
               <div *ngFor="let genre of anime.genres" class="genres">
                 <p-tag styleClass="mr-2" severity="info" value="{{ genre.name }}" [rounded]="true"></p-tag>

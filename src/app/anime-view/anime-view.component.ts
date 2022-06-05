@@ -57,6 +57,7 @@ export class AnimeViewComponent implements OnInit {
         this.myAnimes.push(JSON.parse(item));
     });
     this.myAnimes.sort(this.compare);
+    console.log(this.myAnimes);
   }
 
   removeFromMyList(clickedId){

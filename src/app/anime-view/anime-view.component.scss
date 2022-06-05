@@ -56,7 +56,7 @@ p-tag {
 }
 
 //Hide columns in small devices and change img sizes (max)
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 991px) {
     :host ::ng-deep .sm-screen {
         display: none;
     }
@@ -67,7 +67,7 @@ p-tag {
 }
 
 //Hide columns in small devices and change img sizes (min)
-@media only screen and (min-width: 767px) {
+@media only screen and (min-width: 992px) {
 
     .s-img {
         display: none;
