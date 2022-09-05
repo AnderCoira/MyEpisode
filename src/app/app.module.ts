@@ -34,6 +34,39 @@ import {TooltipModule} from 'primeng/tooltip';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {InputNumberModule} from 'primeng/inputnumber';
 import { AnimeLoaderComponent } from './anime-loader/anime-loader.component';
+import {NgcCookieConsentModule, NgcCookieConsentConfig} from 'ngx-cookieconsent';
+
+const cookieConfig:NgcCookieConsentConfig = 
+{
+  cookie: {
+    domain: "https://myepisode.net/"
+  },
+  position: "bottom",
+  theme: "classic",
+  palette: {
+    popup: {
+      background: "#dbdbdb",
+      text: "#000000",
+      link: "#000000"
+    },
+    button: {
+      background: "#BA68C8",
+      text: "#000",
+      border: "transparent",
+    }
+  },
+  type: "opt-in",
+  content: {
+    message: "This website uses cookies to ensure you get the best experience on our website.",
+    dismiss: "Got it!",
+    deny: "Refuse cookies",
+    link: "Learn more",
+    href: "https://cookiesandyou.com",
+    policy: "Cookie Policy"
+  }
+};
+
+
 
 @NgModule({
   declarations: [
@@ -72,7 +105,9 @@ import { AnimeLoaderComponent } from './anime-loader/anime-loader.component';
     ToastModule,
     TooltipModule,
     ConfirmDialogModule,
-    InputNumberModule
+    InputNumberModule,
+    //Cookie consent
+    NgcCookieConsentModule.forRoot(cookieConfig),
   ],
   providers: [],
   bootstrap: [AppComponent]

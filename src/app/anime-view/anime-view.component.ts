@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy  } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AnimeSearch } from 'src/interfaces/anime-search';
 import { MainService } from '../services/main.service';
 import * as FileSaver from 'file-saver';
+import { NgcCookieConsentService } from 'ngx-cookieconsent';
+import { Subscription }   from 'rxjs';
 import * as XLSX from 'xlsx';
 
 
@@ -12,7 +14,7 @@ import * as XLSX from 'xlsx';
   styleUrls: ['./anime-view.component.scss'],
   providers: [MessageService, ConfirmationService]
 })
-export class AnimeViewComponent implements OnInit {
+export class AnimeViewComponent implements OnInit, OnDestroy {
 
   myAnimes: any = [];
   animeSearch: AnimeSearch;
@@ -22,12 +24,15 @@ export class AnimeViewComponent implements OnInit {
   loader: boolean = false;
   blockUI: boolean = false;
 
-  constructor(private service: MainService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
+  constructor(private service: MainService, private messageService: MessageService, private confirmationService: ConfirmationService, private ccService: NgcCookieConsentService) { }
 
   displayModal: any = false;
 
   ngOnInit(): void {
     this.getMyAnimeList();
+  }
+
+  ngOnDestroy(): void {
   }
 
   submitAnimeName(){
