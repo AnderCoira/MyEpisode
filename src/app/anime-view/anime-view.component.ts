@@ -3,7 +3,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { AnimeSearch } from 'src/interfaces/anime-search';
 import { MainService } from '../services/main.service';
 import * as FileSaver from 'file-saver';
-import { NgcCookieConsentService } from 'ngx-cookieconsent';
+// import { NgcCookieConsentService } from 'ngx-cookieconsent';
 import { Subscription }   from 'rxjs';
 import * as XLSX from 'xlsx';
 
@@ -24,7 +24,7 @@ export class AnimeViewComponent implements OnInit, OnDestroy {
   loader: boolean = false;
   blockUI: boolean = false;
 
-  constructor(private service: MainService, private messageService: MessageService, private confirmationService: ConfirmationService, private ccService: NgcCookieConsentService) { }
+  constructor(private service: MainService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
 
   displayModal: any = false;
 
