@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
-import { AnimeSearch } from 'src/interfaces/anime-search';
+import { AnimeById, AnimeSearch } from 'src/interfaces/anime-search';
 import { AnimeEpisode } from 'src/interfaces/anime-episode';
 
 @Injectable({
@@ -20,6 +20,10 @@ export class MainService {
 
   getAnimeEpisodeById(animeId: Number, episodeNumber: Number){
     return this.http.get<AnimeEpisode>(`${this.URL}/anime/${animeId}/episodes/${episodeNumber}`);
+  }
+
+  getAnimeById(animeId: Number){
+    return this.http.get<AnimeById>(`${this.URL}/anime/${animeId}`);
   }
 
 }

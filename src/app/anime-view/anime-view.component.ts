@@ -56,12 +56,31 @@ export class AnimeViewComponent implements OnInit, OnDestroy {
   }
 
   getMyAnimeList(){
+    this.startLoader();
     this.myAnimes = [];
     Object.keys(localStorage).forEach(data => {
         let item = localStorage.getItem(data);
         this.myAnimes.push(JSON.parse(item));
     });
     this.myAnimes.sort(this.compare);
+
+    //Check the status of the anime (Airing or Finished) and change it in case of a new status
+    this.myAnimes.forEach(anime => {
+      this.service.getAnimeById(anime.mal_id).subscribe({
+        next: res => {
+          if(res.data.status !== anime.status){
+            anime.status = res.data.status;
+            anime.airing = res.data.airing;
+            localStorage.setItem(anime.anime_mal_id, JSON.stringify(anime));
+          }
+        },
+        error: err => {
+          console.log(err);
+          this.addSingleToast('error', 'Unexpected error', 'Please try again...');
+        }
+      });
+    });
+    this.stopLoader();
   }
 
   removeFromMyList(clickedId){
